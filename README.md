@@ -749,7 +749,7 @@ interface RequestBody {
   tags?: string[] // 제품 태그
   thumbnailBase64?: string // 제품 썸네일(대표) 사진(base64) - jpg, jpeg, webp, png, gif, svg
   photoBase64?: string // 제품 상세 사진(base64) - jpg, jpeg, webp, png, gif, svg
-  isSoldOut?: number // 제품 매진 여부
+  isSoldOut?: boolean // 제품 매진 여부
 }
 ```
 
