@@ -791,6 +791,26 @@ interface ResponseValue { // 수정한 제품의 상세 내용
 }
 ```
 
+### 제품 삭제
+
+- 관리자 전용 API입니다.
+
+```curl
+curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/:productId
+  \ -X 'DELETE'
+  \ -H 'masterKey: true'
+```
+
+요청 데이터 타입 및 예시:
+
+-
+
+응답 데이터 타입 및 예시:
+
+```ts
+type ResponseValue = true // 제품 삭제 처리 상태
+```
+
 ### 단일 제품 상세 조회
 
 - 공용 API입니다.
