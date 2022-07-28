@@ -49,14 +49,14 @@
         <div class="saled__btn-group">
           <el-button
             type="primary"
-            plain
+            :class="{ change: !traded.isCanceled }"
             @click="isCanceled(traded.detailId, traded.isCanceled)"
           >
             {{ traded.isCanceled ? '거래 재개' : '거래 취소' }}
           </el-button>
           <el-button
             type="primary"
-            plain
+            :class="{ change: traded.done }"
             @click="isDone(traded.detailId, traded.done)"
           >
             {{ traded.done ? '확정 취소' : '거래 확정' }}
@@ -98,7 +98,7 @@
   .card-container {
     width: max(900px, 60vw);
     margin: 20px auto;
-    background-color: #1d1e1f;
+    background-color: #313131;
     border-radius: 10px;
     overflow: hidden;
     padding: 60px 0;
@@ -108,10 +108,10 @@
       height: 260px;
       margin: 20px auto;
       display: flex;
-      background-color: #1d3043;
+      background-color: #545455;
       border-radius: 8px;
       overflow: hidden;
-      color: #a3a6ad;
+      color: #cbcbcb;
       box-shadow: 0px 0px 10px #00000061;
       position: relative;
       .saled__poster {
@@ -142,7 +142,7 @@
           }
           span {
             display: block;
-            color: #e5eaf3;
+            color: #fff;
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 10px;
@@ -161,7 +161,7 @@
         }
         .saled__client {
           font-size: 18px;
-          color: #e5eaf3;
+          color: #fff;
           p {
             margin-bottom: 10px;
           }
@@ -176,10 +176,19 @@
           margin: 30px 0;
           height: 92px;
           width: 92px;
-          background-color: #18222c;
+          // background-color: #18222c;
+          border: 0;
           font-weight: 700;
+          // &:hover {
+          //   background-color: #3375b9;
+          // }
+        }
+        .change {
+          color: #fff;
+          background-color: #f56c6c;
           &:hover {
-            background-color: #409eff;
+            // color: #fff;
+            background-color: #f78989;
           }
         }
       }
