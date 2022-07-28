@@ -179,10 +179,6 @@
           </el-button>
           <el-button class="product-edit__btn" type="danger" @click="deletePf">
             {{ isDeleted ? '삭제됨' : '삭제하기' }}
-            {{ isDone ? '편집됨' : '편집하기' }}
-          </el-button>
-          <el-button class="product-edit__btn" type="danger" @click="deletePf">
-            {{ isDeleted ? '삭제됨' : '삭제하기' }}
           </el-button>
         </el-form-item>
       </el-form>
