@@ -3,10 +3,10 @@
     <div class="nav-container">
       <div class="main">
         <router-link to="/">
-          <p class="title">
+          <div class="title">
             POPPO <br />
             MONCE
-          </p>
+          </div>
         </router-link>
       </div>
       <div v-if="isAdmin" class="admin-header-link">
@@ -117,7 +117,7 @@
     width: 100%;
     height: 70px;
     .nav-container {
-      width: 1000px;
+      width: 1200px;
       margin: auto;
       height: 100%;
       display: flex;
@@ -125,8 +125,8 @@
       justify-content: space-between;
       .main {
         font-family: 'GangwonEduPowerExtraBoldA';
-        font-size: 27px;
         font-weight: 500;
+        line-height: 1;
         align-items: center;
         display: flex;
         justify-content: center;
@@ -145,7 +145,7 @@
             justify-content: center;
             align-items: center;
             height: 100%;
-            padding-top: 10px;
+            font-size: 23px;
           }
         }
       }

@@ -55,6 +55,14 @@ export default {
       });
       commit('showDetail', data);
     },
+    async addProduct(context, data) {
+      await axios({
+        url: PRODUCT_URL,
+        method: 'POST',
+        headers,
+        data,
+      });
+    },
     async editProduct({ state, dispatch }, payload) {
       const { productId, data } = payload;
       state.loading = true;

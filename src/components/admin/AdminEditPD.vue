@@ -385,11 +385,14 @@
     height: max(700px, 70vh);
     position: relative;
     display: flex;
-    background-color: #363637;
+    background-color: #2b2b2b;
     color: #eee;
     border-radius: 10px;
-    --el-text-color-regular: #eee;
+    --el-text-color-regular: #e5eaf3;
     --el-text-color-primary: #eee;
+    --el-input-bg-color: #2b2b2b;
+    --el-fill-color-blank: #2b2b2b;
+    --el-border-color: #4c4d4f;
     .edit__title {
       margin-bottom: 40px;
       .form-title {

@@ -1,20 +1,15 @@
 <template>
-  <div
-    class="searchContainer">
-    <div
-      class="search-form"
-      :class="{ searching: !filterOpen }">
+  <div class="searchContainer">
+    <div class="search-form" :class="{ searching: !filterOpen }">
       <input
         v-model="searchText"
         class="form-control"
         type="text"
         placeholder="Please search the title or genre of performance which you want"
         @click="[filterShow(), reset()]"
-        @keyup.enter="apply" />
-      <button
-        class="btn"
-        type="submit"
-        @click="apply">
+        @keyup.enter="apply"
+      />
+      <button class="btn" type="submit" @click="apply">
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
     </div>
@@ -22,57 +17,40 @@
     <transition name="filterFade">
       <div
         v-show="focusingInput ? filterOpen : !filterOpen"
-        class="filter-form">
+        class="filter-form"
+      >
         <div class="selects-genre">
-          <select
-            v-model="genre"
-            class="form-select">
-            <option
-              :value="null"
-              disabled
-              hidden>
-              장르
-            </option>
+          <select v-model="genre" class="form-select">
+            <option :value="null" disabled hidden>장르</option>
             <option
               v-for="item in genreOptions"
               :key="item"
               :label="item"
-              :value="item"></option>
+              :value="item"
+            ></option>
           </select>
         </div>
         <div class="selects-age">
-          <select
-            v-model="age"
-            class="form-select">
-            <option
-              :value="null"
-              disabled
-              hidden>
-              연령
-            </option>
+          <select v-model="age" class="form-select">
+            <option :value="null" disabled hidden>연령</option>
             <option
               v-for="item in ageOptions"
               :key="item"
               :label="item"
               :value="item"
-              disabled></option>
+              disabled
+            ></option>
           </select>
         </div>
         <div class="selects-region">
-          <select
-            v-model="region"
-            class="form-select">
-            <option
-              :value="null"
-              disabled
-              hidden>
-              지역
-            </option>
+          <select v-model="region" class="form-select">
+            <option :value="null" disabled hidden>지역</option>
             <option
               v-for="item in regionOptions"
               :key="item"
               :label="item"
-              :value="item"></option>
+              :value="item"
+            ></option>
           </select>
         </div>
       </div>
@@ -151,7 +129,7 @@
       reset() {
         this.searchText = '';
         this.searchTags = [];
-      }
+      },
     },
   };
 </script>
@@ -205,7 +183,7 @@
       &.searching {
         width: 60%;
         height: 35px;
-        bottom: 360px;
+        bottom: 340px;
         transition: all 0.8s;
       }
       .form-control {

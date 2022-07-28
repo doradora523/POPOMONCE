@@ -2,7 +2,7 @@
   <div class="container">
     <div class="pageWrap">
       <div class="bookingInfo">
-        <h2>예매정보</h2>
+        <div class="h2"><p>예매정보</p></div>
         <div v-if="!pfLoading" class="bookingInfo__details">
           <div class="poster">
             <img :src="myChoice.mainPoster" :alt="myChoice.title" />
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="payment">
-        <h2>결제수단</h2>
+        <div class="h2"><p>결제수단</p></div>
         <div class="payment__select">
           <h3>간편계좌이체</h3>
           <div v-if="!payLoading" class="payment__select__bank">
@@ -182,25 +182,23 @@
     align-items: center;
     background-color: rgb(27, 27, 31);
     .pageWrap {
-      max-width: 80%;
-      max-height: 90%;
-      width: 60%;
+      height: 800px;
+      width: min(1200px, 80%);
       display: flex;
       position: relative;
       top: 25px;
       border-radius: 20px;
       background-color: #fff;
-      overflow-y: scroll;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      h2 {
+      overflow: hidden;
+      .h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
         font-size: 20px;
         color: #fff;
-        text-align: center;
         width: 100%;
-        line-height: 60px;
-        background-color: #000;
+        background-color: #141414;
       }
       .bookingInfo {
         width: 35%;
@@ -258,11 +256,18 @@
         width: 65%;
         background-color: #eee;
         position: relative;
+        overflow: hidden;
         .payment__select {
           width: 100%;
+          height: 100%;
           background-color: #eee;
-          padding: 30px 0;
-          letter-spacing: 1.2px;
+          padding-top: 40px;
+          padding-bottom: 150px;
+          // letter-spacing: 1.2px;
+          overflow-y: scroll;
+          &::-webkit-scrollbar {
+            display: none;
+          }
           h3 {
             text-indent: 40px;
             font-size: 15px;
@@ -275,6 +280,7 @@
             justify-content: center;
             align-items: center;
             padding: 0 20px;
+
             .bank-card {
               display: flex;
               justify-content: center;
@@ -283,7 +289,7 @@
               font-size: 16px;
               line-height: 30px;
               width: max(200px, 40%);
-              min-height: 130px;
+              min-height: 110px;
               background-color: #fff;
               border: 1px solid #fff;
               border-radius: 20px;
@@ -330,6 +336,8 @@
           text-align: center;
           cursor: pointer;
           transition: all 0.2s;
+          position: absolute;
+          bottom: 0;
           &:hover {
             font-size: 18px;
           }

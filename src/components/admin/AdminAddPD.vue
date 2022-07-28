@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item
         label="공연 이름"
-        class="form__composition"
+        class="form__composition title"
         :rules="{
           required: true,
           message: '공연 이름은 필수 항목 입니다.',
@@ -22,7 +22,7 @@
       </el-form-item>
       <el-form-item
         label="가격"
-        class="form__composition"
+        class="form__composition price"
         :rules="{
           required: true,
           message: '공연 가격은 필수 항목 입니다.',
@@ -33,7 +33,7 @@
       </el-form-item>
       <el-form-item
         label="상세 설명"
-        class="form__composition"
+        class="form__composition descript"
         :rules="{
           required: true,
           message: '공연 상세설명은 필수 항목 입니다.',
@@ -181,7 +181,7 @@
       </div>
       <el-form-item>
         <el-button class="product-add__btn" type="primary" @click="submit">
-          공연 추가하기
+          공연 추가하기 {{ errorMsg }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -245,6 +245,76 @@
         isSoldOut: false,
       };
     },
+    watch: {
+      // 경고창 비활성/활성화
+      title(newV, oldV) {
+        const errorMsg = document.querySelector('.title .el-form-item__error');
+        const errorBorder = document.querySelector('.title .el-input__wrapper');
+        const errorSuffix = document.querySelector(
+          '.title .el-input__validateIcon',
+        );
+        if (newV) {
+          if (!errorMsg) return;
+          console.log('no error');
+          errorMsg.style.display = 'none';
+          errorBorder.style.boxShadow = '0 0 0 1px #4c4d4f inset';
+          errorSuffix.style.display = 'none';
+        }
+        if (!newV && oldV) {
+          if (!errorMsg) return;
+          console.log('error');
+          errorMsg.style.display = 'block';
+          errorBorder.style.boxShadow = '0 0 0 1px #f56c6c inset';
+          errorSuffix.style.display = 'inline-flex';
+        }
+      },
+      price(newV, oldV) {
+        const errorMsg = document.querySelector('.price .el-form-item__error');
+        const errorBorder = document.querySelector('.price .el-input__wrapper');
+        const errorSuffix = document.querySelector(
+          '.price .el-input__validateIcon',
+        );
+        if (newV) {
+          if (!errorMsg) return;
+          console.log('no error');
+          errorMsg.style.display = 'none';
+          errorBorder.style.boxShadow = '0 0 0 1px #4c4d4f inset';
+          errorSuffix.style.display = 'none';
+        }
+        if (!newV && oldV) {
+          if (!errorMsg) return;
+          console.log('error');
+          errorMsg.style.display = 'block';
+          errorBorder.style.boxShadow = '0 0 0 1px #f56c6c inset';
+          errorSuffix.style.display = 'inline-flex';
+        }
+      },
+      description(newV, oldV) {
+        const errorMsg = document.querySelector(
+          '.description .el-form-item__error',
+        );
+        const errorBorder = document.querySelector(
+          '.description .el-input__wrapper',
+        );
+        const errorSuffix = document.querySelector(
+          '.description .el-input__validateIcon',
+        );
+        if (newV) {
+          if (!errorMsg) return;
+          console.log('no error');
+          errorMsg.style.display = 'none';
+          errorBorder.style.boxShadow = '0 0 0 1px #4c4d4f inset';
+          errorSuffix.style.display = 'none';
+        }
+        if (!newV && oldV) {
+          if (!errorMsg) return;
+          console.log('error');
+          errorMsg.style.display = 'block';
+          errorBorder.style.boxShadow = '0 0 0 1px #f56c6c inset';
+          errorSuffix.style.display = 'inline-flex';
+        }
+      },
+    },
     methods: {
       handleAvatarRemove(fileList) {
         const uploader = this.$refs[fileList].$el;
@@ -274,7 +344,29 @@
         this.$data[encodedImg] = encodedString;
         console.log(this.$data[encodedImg]);
       },
-      submit() {},
+      async submit() {
+        const tags = [this.age, this.genre, this.openrun, this.region].filter(
+          (tag) => tag,
+        );
+
+        try {
+          await this.$store.dispatch('admin/addProduct', {
+            productId: this.$route.params.id,
+            data: {
+              title: this.title,
+              price: this.price,
+              description: this.description,
+              tags,
+              thumbnailBase64: this.thumbnailBase64 || null,
+              photoBase64: this.photoBase64 || null,
+            },
+          });
+          alert('공연이 추가되었습니다.');
+          this.$router.push('/admin/allsales');
+        } catch (error) {
+          console.log(error);
+        }
+      },
     },
   };
 </script>
@@ -288,11 +380,14 @@
     height: max(700px, 70vh);
     position: relative;
     display: flex;
-    background-color: #363637;
+    background-color: #2b2b2b;
     color: #eee;
     border-radius: 10px;
-    --el-text-color-regular: #eee;
+    --el-text-color-regular: #e5eaf3;
     --el-text-color-primary: #eee;
+    --el-input-bg-color: #2b2b2b;
+    --el-fill-color-blank: #2b2b2b;
+    --el-border-color: #4c4d4f;
     .add__title {
       margin-bottom: 40px;
       .form-title {
