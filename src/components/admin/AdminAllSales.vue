@@ -81,10 +81,9 @@
     },
     computed: {
       products() {
-        return this.$store.state.admin.allProducts.slice(
-          0,
-          this.offset + this.limit,
-        );
+        const res = this.$store.state.admin.allProducts;
+        if (!res) return;
+        return res && res.slice(0, this.offset + this.limit);
       },
       totalCount() {
         return this.products.length;
