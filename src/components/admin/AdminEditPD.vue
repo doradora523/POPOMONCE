@@ -314,7 +314,7 @@
       },
     },
     created() {
-      this.$store.dispatch('admin/showDetail', this.$route.params.id);
+      this.$store.dispatch('admin/showDetail', this.$route.params.adminId);
     },
     methods: {
       handleAvatarRemove(fileList) {
@@ -386,11 +386,14 @@
     align-items: center;
     margin: auto;
     width: 1000px;
-    height: 700px;
+    height: max(800px, 70vh);
     position: relative;
     display: flex;
-    background-color: #f4f4f5;
+    background-color: #363637;
+    color: #eee;
     border-radius: 10px;
+    --el-text-color-regular: #eee;
+    --el-text-color-primary: #eee;
     .edit__title {
       margin-bottom: 40px;
       .form-title {

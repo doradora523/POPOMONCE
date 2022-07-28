@@ -115,7 +115,7 @@
     z-index: 99;
     background-color: rgba(15, 15, 15, 0.9);
     width: 100%;
-    height: 100px;
+    height: 70px;
     .nav-container {
       width: 1000px;
       margin: auto;
@@ -125,7 +125,7 @@
       justify-content: space-between;
       .main {
         font-family: 'GangwonEduPowerExtraBoldA';
-        font-size: 30px;
+        font-size: 27px;
         font-weight: 500;
         align-items: center;
         display: flex;

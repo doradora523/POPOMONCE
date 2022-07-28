@@ -4,11 +4,13 @@
       <div
         v-for="traded in tradedList"
         :key="traded.detailId"
-        class="saled-card">
+        class="saled-card"
+      >
         <div class="saled__poster">
           <img
             :src="traded.product.thumbnail"
-            :alt="traded.product.thumbnail" />
+            :alt="traded.product.thumbnail"
+          />
         </div>
         <div class="saled__description">
           <div class="saled__title">
@@ -23,7 +25,7 @@
               공연 기간:
               {{
                 traded.product.title.split('@')[1] ===
-                  traded.product.title.split('@')[2]
+                traded.product.title.split('@')[2]
                   ? traded.product.title.split('@')[1]
                   : traded.product.title.split('@')[1] +
                     ' - ' +
@@ -48,13 +50,15 @@
           <el-button
             type="primary"
             plain
-            @click="isCanceled(traded.detailId, traded.isCanceled)">
+            @click="isCanceled(traded.detailId, traded.isCanceled)"
+          >
             {{ traded.isCanceled ? '거래 재개' : '거래 취소' }}
           </el-button>
           <el-button
             type="primary"
             plain
-            @click="isDone(traded.detailId, traded.done)">
+            @click="isDone(traded.detailId, traded.done)"
+          >
             {{ traded.done ? '확정 취소' : '거래 확정' }}
           </el-button>
         </div>
@@ -98,7 +102,7 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 60px 0;
-    height: 650px;
+    height: max(800px, 70vh);
     .saled-card {
       width: max(700px, 50vw);
       height: 260px;
@@ -113,7 +117,7 @@
       .saled__poster {
         width: 200px;
         flex-shrink: 0;
-        
+
         img {
           width: 100%;
         }

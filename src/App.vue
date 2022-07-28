@@ -24,6 +24,6 @@
 
   body {
     font-family: 'MICEMyungjo';
-    background-color: rgb(27, 27, 31);
+    background-color: rgb(29, 29, 29);
   }
 </style>
