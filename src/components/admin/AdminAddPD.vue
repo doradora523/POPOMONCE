@@ -285,7 +285,7 @@
     align-items: center;
     margin: auto;
     width: 1000px;
-    height: max(800px, 70vh);
+    height: max(700px, 70vh);
     position: relative;
     display: flex;
     background-color: #363637;
