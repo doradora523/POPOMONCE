@@ -104,6 +104,7 @@
     },
     methods: {
       onScroll() {
+        // (유사) 무한스크롤링 (강사님 api에서 조절할 수 없어, 직접 구현해봤습니다)
         const docElement = document.documentElement;
         if (
           window.scrollY + docElement.clientHeight >

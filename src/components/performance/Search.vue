@@ -112,6 +112,7 @@
       },
       apply() {
         if (!this.focusingInput) return;
+        // tag에 아무것도 선택하지 않았을 때, 빈문자열을 그대로 보내는 것이 아니라 truesy한 값만 전송하도록 함
         this.searchTags = [this.genre, this.age, this.region].filter((t) => t);
         this.isLoading = true;
         this.searchText = this.searchText.trim();

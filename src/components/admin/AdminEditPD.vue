@@ -320,6 +320,7 @@
         this[fileList] = [];
       },
       async handleAvatarSuccess(fileList) {
+        // 파일이 성공적으로 업로드 되었을 때, css 조절 + base 64 변환
         const uploader =
           fileList === 'thumbnailFileList'
             ? this.$refs.thumbnailFileList

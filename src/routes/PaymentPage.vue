@@ -82,6 +82,7 @@
     },
     computed: {
       selectedDate() {
+        // 상세정보에서 사용자가 선택한 날짜를 표시
         const res = this.$store.state.performance.selectedDate;
         if (!res) return '선택한 날짜가 없습니다';
         const year = res.getFullYear() + '년 ';
@@ -93,15 +94,21 @@
         return selected;
       },
       payLoading() {
+        // 은행목록 불러오는 로딩
         return this.$store.state.payment.loading;
       },
       pfLoading() {
+        // 공연 상세 정보 불러오는 로딩
         return this.$store.state.performance.isLoading;
       },
       myChoice() {
+        // 사용자가 선택한 공연의 상세정보
         return this.$store.state.performance.detailData;
       },
       ableBankList() {
+        // 모든 은행목록 & 등록 가능 여부 api에서 가져오는 정보와
+        // 이미 등록되어있는 은행목록 api에서 가져오는 정보를 합쳐
+        // 등록가능 여부를 확인하고 이미 등록되어 있다면 그 잔액까지 볼 수 있도록 정보를 합침
         const bankIndexes = {};
         const bankList = this.$store.state.payment.bankList;
         const mine = this.$store.state.payment.accountList.accounts;
@@ -132,15 +139,8 @@
       );
     },
     methods: {
-      changeItem(newAccountId) {
-        const target = this.$refs[this.accountId];
-        target[0].style.border = '1px solid #fff';
-
-        this.accountId = newAccountId;
-        const newTarget = this.$refs[newAccountId];
-        newTarget[0].style.border = '1.5px solid #fe253f';
-      },
       accountID(accountId) {
+        // 선택한 은행 카드에 css 주기
         if (!this.accountId) {
           this.$refs[accountId][0].style.border = '1.5px solid #fe253f';
           this.accountId = accountId;

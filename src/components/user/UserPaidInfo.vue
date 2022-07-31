@@ -3,10 +3,7 @@
     <h2>공연 구매 내역</h2>
     <div class="ticket_listbox">
       <ul class="ticket_list">
-        <li
-          v-for="payment in payments"
-          :key="payment.id"
-          class="ticket_info">
+        <li v-for="payment in payments" :key="payment.id" class="ticket_info">
           <div class="ticket_title_wrap">
             <h4 class="performance_date">
               {{ payment.product.title.split('@')[1] }}
@@ -18,15 +15,15 @@
               <h3 class="title">
                 공연명: {{ payment.product.title.split('@')[0] }}
               </h3>
-              <span class="reservation_info">예약정보: {{ payment.detailId }}</span>
+              <span class="reservation_info"
+                >예약정보: {{ payment.detailId }}</span
+              >
             </div>
           </div>
           <div class="ticket_card">
             <div class="info_area">
               <div class="thumbnail">
-                <img
-                  :src="payment.product.thumbnail"
-                  alt="poster" />
+                <img :src="payment.product.thumbnail" alt="poster" />
               </div>
               <div class="info">
                 <p>
@@ -41,17 +38,12 @@
                   공연장 :
                   <span> {{ payment.product.description.split('@')[2] }}</span>
                 </p>
-                <div
-                  class="paid_toggle"
-                  @click="openPaid(payment.detailId)">
+                <div class="paid_toggle" @click="openPaid(payment.detailId)">
                   결제내역
                 </div>
               </div>
 
-              <transition
-                v-show="paidOpen"
-                name="openFade"
-                class="paid">
+              <transition v-show="paidOpen" name="openFade" class="paid">
                 <div class="paid_info">
                   <p>
                     결제일시 :
@@ -82,7 +74,7 @@
                       }}</span>
                       <span>{{
                         paymentDetail.account &&
-                          paymentDetail.account.accountNumber
+                        paymentDetail.account.accountNumber
                       }}</span>
                     </span>
                   </div>
@@ -118,6 +110,7 @@
     },
     methods: {
       async openPaid(id) {
+        // 상세보기를 눌렀을 때, 상세 정보를 불러오기
         this.paidOpen = !this.paidOpen;
         await this.$store.dispatch('payment/paymentDetail', { detailId: id });
         this.paidInfoDetail = this.$store.state.payment.paidInfoDetail;

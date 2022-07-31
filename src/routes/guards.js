@@ -10,6 +10,7 @@ const headers = {
   username: 'TeamTwo',
 };
 
+// 새로고침이나 창이 이동해도 로그인 상태 유지
 router.beforeEach(async () => {
   const accessToken = window.sessionStorage.getItem('token');
   if (!accessToken) return;
@@ -27,6 +28,7 @@ router.beforeEach(async () => {
     });
     store.state.user.isLogin = true;
 
+    // 이메일이 매니저 이메일 일때 관리자 페이지 권한으로 로그인
     if (data.email === 'manager22@management.admin') {
       store.state.isAdmin = true;
     }

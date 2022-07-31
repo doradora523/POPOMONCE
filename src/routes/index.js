@@ -28,7 +28,7 @@ export default createRouter({
       component: Admin,
       children: [
         { path: 'allsales', component: AdminAllSales },
-        { path: 'edit/:adminId', component: AdminEditPD },
+        { path: 'edit/:adminId', component: AdminEditPD }, // path에 product id를 넣어줌으로써 에러 상황을 줄임
         { path: 'add', component: AdminAddPD },
         { path: 'saled', component: AdminAllSaledList },
       ],

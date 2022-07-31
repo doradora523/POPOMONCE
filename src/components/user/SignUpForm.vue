@@ -1,18 +1,10 @@
 <template>
   <div class="signup-container">
     <div class="page-container">
-      <div class="signup__title">
-        회원가입
-      </div>
-      <div
-        v-if="isSignup"
-        class="sign-up-form">
-        <el-form
-          label-width="100px"
-          status-icon>
-          <el-form-item
-            label="E-mail"
-            class="form__composition">
+      <div class="signup__title">회원가입</div>
+      <div v-if="isSignup" class="sign-up-form">
+        <el-form label-width="100px" status-icon>
+          <el-form-item label="E-mail" class="form__composition">
             <el-input
               v-model="email"
               placeholder="ex) abc12@gmail.com"
@@ -27,11 +19,10 @@
                   message: 'email 형식이 아닙니다.',
                   trigger: ['blur', 'change'],
                 },
-              ]" />
+              ]"
+            />
           </el-form-item>
-          <el-form-item
-            label="password"
-            class="form__composition">
+          <el-form-item label="password" class="form__composition">
             <el-input
               v-model="password"
               placeholder="8자리 이상"
@@ -48,11 +39,10 @@
                   message: '8자리 이상이어야 합니다.',
                   trigger: 'blur',
                 },
-              ]" />
+              ]"
+            />
           </el-form-item>
-          <el-form-item
-            label="user name"
-            class="form__composition">
+          <el-form-item label="user name" class="form__composition">
             <el-input
               v-model="displayName"
               placeholder="20자 이하"
@@ -64,11 +54,10 @@
                   trigger: 'blur',
                 },
                 { max: 20, message: '20자까지만 가능합니다.', trigger: 'blur' },
-              ]" />
+              ]"
+            />
           </el-form-item>
-          <el-form-item
-            label="profile"
-            class="form__composition profile">
+          <el-form-item label="profile" class="form__composition profile">
             <el-upload
               ref="profile"
               :file-list="fileList"
@@ -77,7 +66,8 @@
               :auto-upload="false"
               :on-change="handleAvatarSuccess"
               :limit="1"
-              list-type="picture-card">
+              list-type="picture-card"
+            >
               <el-icon class="avatar-uploader-icon">
                 <Plus />
               </el-icon>
@@ -86,11 +76,13 @@
                   <img
                     class="el-upload-list__item-thumbnail"
                     :src="file.url"
-                    alt="" />
+                    alt=""
+                  />
                   <span class="el-upload-list__item-actions">
                     <span
                       class="el-upload-list__item-delete"
-                      @click="handleAvatarRemove">
+                      @click="handleAvatarRemove"
+                    >
                       <el-icon><Delete /></el-icon>
                     </span>
                   </span>
@@ -99,28 +91,16 @@
             </el-upload>
           </el-form-item>
           <el-form-item class="btn-group">
-            <el-button
-              :disabled="!validation"
-              @click="submit">
+            <el-button :disabled="!validation" @click="submit">
               Create
             </el-button>
-            <el-button
-              @click="clear">
-              Reset
-            </el-button>
+            <el-button @click="clear"> Reset </el-button>
           </el-form-item>
         </el-form>
       </div>
-      <div
-        v-else
-        class="successSignUp">
-        <div class="success">
-          환영합니다!
-        </div>
-        <el-button
-          type="primary"
-          class="successSignUp__btn"
-          @click="goLogin">
+      <div v-else class="successSignUp">
+        <div class="success">환영합니다!</div>
+        <el-button type="primary" class="successSignUp__btn" @click="goLogin">
           로그인 하러 가기
         </el-button>
       </div>
@@ -157,6 +137,7 @@
     },
     computed: {
       validation() {
+        // 회원가입시 필수적으로 입력해야 할 정보가 다 있는지 확인
         const re =
           /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
         return re.test(this.email) && this.password && this.displayName;
@@ -187,7 +168,8 @@
           email: this.email,
           password: this.password,
           displayName: this.displayName,
-          profileImgBase64: this.profileBase64 || null,
+          profileImgBase64:
+            this.profileBase64 || this.$store.state.user.defaultProfile,
         });
         this.isSignup = false;
       },
@@ -196,6 +178,7 @@
         this.clear();
       },
       async handleAvatarSuccess() {
+        // 사진이 성공적으로 업로드 된 후 돌아갈 함수
         if (this.fileList.length < 1) return;
         const uploader = this.$refs.profile.$el;
         const inputCard = uploader.querySelector('.el-upload--picture-card');
@@ -212,6 +195,7 @@
         card.style.display = 'inline-flex';
       },
       toBase64(file) {
+        // 프로필 사진 base64 파일로 변환하기
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.readAsDataURL(file);
@@ -236,7 +220,7 @@
         font-size: 20px;
         font-weight: 700;
         position: relative;
-        bottom:100px;
+        bottom: 100px;
         display: block;
         text-align: center;
       }
@@ -258,7 +242,7 @@
           .el-button {
             background-color: rgb(16, 15, 18);
             border: 1px solid #fff;
-            color:#fff;
+            color: #fff;
           }
         }
       }
@@ -280,10 +264,10 @@
           padding: 22px 25px;
           border-radius: 9px;
           font-size: 15px;
-          color:#000;
+          color: #000;
           width: 130px;
-          background-color: #B8AC8F;
-          border:1px solid #B8AC8F;
+          background-color: #b8ac8f;
+          border: 1px solid #b8ac8f;
         }
       }
     }

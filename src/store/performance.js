@@ -366,6 +366,7 @@ export default {
 
   actions: {
     async searchList({ state, commit }, payload) {
+      // 검색 목록 불러오기
       state.isLoading = true;
 
       try {
@@ -375,7 +376,6 @@ export default {
           headers,
           data: payload,
         });
-        // console.log(performances)
         commit('searchList', {
           performances,
         });
@@ -385,6 +385,7 @@ export default {
     },
 
     async poster({ commit }) {
+      // 메인 포스터 슬라이드에 담길 포스터들
       try {
         const res = await axios({
           url: SEARCH_URL,
@@ -398,6 +399,7 @@ export default {
       }
     },
     async searchShow({ state, commit }, performancesId) {
+      // 상품 상세 페이지
       try {
         state.isLoading = true;
         const { data } = await axios({

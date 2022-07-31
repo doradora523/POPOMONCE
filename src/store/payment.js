@@ -45,6 +45,7 @@ export default {
   },
   actions: {
     async bankList({ commit }) {
+      // 전체 은행목록 및 등록 가능 여부
       const accessToken = window.sessionStorage.getItem('token');
       const { data } = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account/banks',
@@ -57,6 +58,7 @@ export default {
       commit('bankList', data);
     },
     async accountList({ state, commit }) {
+      // 이미 연결된 은행 목록 및 잔액
       const accessToken = window.sessionStorage.getItem('token');
       state.loading = true;
       try {
@@ -76,6 +78,7 @@ export default {
       }
     },
     async connectAccount({ commit }, data) {
+      // 신규 계좌 연결
       const accessToken = window.sessionStorage.getItem('token');
       const res = await axios({
         url: BANK_ACCESS,
@@ -89,6 +92,7 @@ export default {
       commit('connectAccount', res.data);
     },
     async disconnect(context, accountId) {
+      // 기존 계좌 해지
       try {
         const accessToken = window.sessionStorage.getItem('token');
         await axios({
@@ -108,6 +112,7 @@ export default {
       }
     },
     async buy(context, data) {
+      // 물품 구매
       const accessToken = window.sessionStorage.getItem('token');
       try {
         await axios({
@@ -125,6 +130,7 @@ export default {
       }
     },
     async paymentAll({ state, commit }) {
+      // 구매한 물품 전체 조회(고객)
       try {
         state.loading = true;
         const accessToken = window.sessionStorage.getItem('token');
@@ -143,6 +149,7 @@ export default {
       }
     },
     async paymentDetail({ state, commit }, data) {
+      // 구매한 물품 상세정보 조회
       try {
         state.loading = true;
         const accessToken = window.sessionStorage.getItem('token');
@@ -162,6 +169,7 @@ export default {
       }
     },
     async cancelPayment(context, data) {
+      // 구매 취소(고객)
       try {
         const accessToken = window.sessionStorage.getItem('token');
         await axios({

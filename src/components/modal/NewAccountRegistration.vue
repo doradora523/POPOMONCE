@@ -20,9 +20,7 @@
 
         <div class="account-number">
           <h5>계좌번호</h5>
-          <div
-            ref="inputGroup"
-            class="account-number__container">
+          <div ref="inputGroup" class="account-number__container">
             <input
               v-for="(digit, idx) in bankDigits[bankCode]"
               :key="idx"
@@ -34,7 +32,8 @@
               :tabindex="idx + 1"
               class="account-number__input"
               @keydown="keyDownEvent"
-              @input="onlyNum" />
+              @input="onlyNum"
+            />
           </div>
         </div>
 
@@ -47,19 +46,15 @@
           pattern="\d*"
           placeholder="휴대폰 번호를 입력해주세요"
           minlength="11"
-          maxlength="11" />
+          maxlength="11"
+        />
 
-        <el-checkbox
-          v-model="checked"
-          class="check-agreement"
-          required>
+        <el-checkbox v-model="checked" class="check-agreement" required>
           계좌 등록에 동의합니다.
         </el-checkbox>
       </div>
     </div>
-    <div
-      class="add-btn"
-      @click="submit">
+    <div class="add-btn" @click="submit">
       <p>등록</p>
     </div>
   </div>
@@ -104,6 +99,7 @@
           event.target.nextElementSibling.focus();
         }
 
+        // previous input
         if (event.code === 'Backspace') {
           if (
             event.target.value.length === 0 &&
@@ -114,12 +110,14 @@
         }
       },
       onlyNum(event) {
+        // input tag의 type을 number로 설정하면 maxlength/minlength를 설정할 수 없어, js code로 제어함
         event.target.value = event.target.value.replace(/[^0-9]/g, '');
       },
       async submit() {
         this.accountNumber = this.accountNumberList.join('');
 
         if (
+          // 하나라도 없다면 함수를 실행시키지 않음
           !(
             this.bankCode &&
             this.accountNumber &&

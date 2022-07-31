@@ -10,7 +10,8 @@
         disableOnInteraction: false,
       }"
       :modules="modules"
-      class="swiper-container">
+      class="swiper-container"
+    >
       <swiper-slide v-if="details.title">
         <p class="Kategorie">공연 제목</p>
         <p class="detail">
@@ -98,6 +99,8 @@
         const details = this.$store.state.performance.detailData;
         Object.entries(details).forEach(([k, v]) => {
           if (!String(v).trim()) {
+            // 상세 정보에  제작사, 출연진 등의 정보가 없어  " "로 정보가 전달 된 경우
+            // 빈칸을 제외했을 때 falsy한 값이면 그 key값을 Object에서 아예 삭제함
             delete details[k];
           }
         });

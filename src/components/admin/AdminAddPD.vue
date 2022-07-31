@@ -246,7 +246,8 @@
       };
     },
     watch: {
-      // 경고창 비활성/활성화
+      // 필수값을 입력하지 않았을 때, 경고창 비활성/활성화
+      // (프로젝트에 적용했던 외부 라이브러리가 에러가 있어, js code로 직접 조절하였습니다. 그래도 미흡한 부분이 있습니다ㅠ)
       title(newV, oldV) {
         const errorMsg = document.querySelector('.title .el-form-item__error');
         const errorBorder = document.querySelector('.title .el-input__wrapper');

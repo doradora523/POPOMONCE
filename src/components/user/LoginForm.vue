@@ -1,34 +1,24 @@
 <template>
   <div class="login-container">
     <div class="page-container">
-      <div class="login__title">
-        로그인
-      </div>
+      <div class="login__title">로그인</div>
       <el-form
         label-width="100px"
         class="login-form"
         status-icon
-        @keydown.enter="submit">
-        <el-form-item
-          label="E-mail"
-          class="form__composition form__Id">
+        @keydown.enter="submit"
+      >
+        <el-form-item label="E-mail" class="form__composition form__Id">
           <el-input
             v-model="email"
             type="email"
-            placeholder="ex) abc12@gmail.com" />
+            placeholder="ex) abc12@gmail.com"
+          />
         </el-form-item>
-        <el-form-item
-          label="password"
-          class="form__composition form__password">
-          <el-input
-            v-model="password"
-            type="password"
-            placeholder="비밀번호" />
+        <el-form-item label="password" class="form__composition form__password">
+          <el-input v-model="password" type="password" placeholder="비밀번호" />
         </el-form-item>
-        <el-button
-          class="login-btn"
-          type="success"
-          @click="submit">
+        <el-button class="login-btn" type="success" @click="submit">
           로그인
         </el-button>
       </el-form>
@@ -46,6 +36,7 @@
     },
     computed: {
       validation() {
+        // 이메일 형식 확인 + 비밀번호 유무 확인
         const re =
           /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
         return re.test(this.email) && this.password;

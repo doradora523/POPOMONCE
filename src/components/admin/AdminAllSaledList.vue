@@ -81,7 +81,6 @@
       this.$store.dispatch('admin/tradedProduct');
     },
     methods: {
-      goPfDetail(productId) {},
       isCanceled(id, isCancel) {
         const isCanceled = !isCancel;
         this.$store.dispatch('admin/cancelTrade', [{ id }, { isCanceled }]);

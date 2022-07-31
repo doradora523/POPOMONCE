@@ -8,14 +8,14 @@
       }"
       :modules="modules"
       :slides-per-view="1"
-      class="mySwiper">
+      class="mySwiper"
+    >
       <swiper-slide
         v-for="(poster, idx) in posters"
         :key="poster"
-        class="posterBox">
-        <img
-          :src="poster.thumbnail"
-          class="image" />
+        class="posterBox"
+      >
+        <img :src="poster.thumbnail" class="image" />
         <div class="posterCard">
           <h3>{{ poster.tags[1] }}</h3>
           <h2>{{ poster.title.split('@')[0] }}</h2>
@@ -80,6 +80,7 @@
 
         const dateList = [];
         for (let i = 0; i < posters.length; i += 1) {
+          // 시작 날짜와 끝나는 날짜가 같을 때(공연이 하루만 할 때)는 시작날짜만 보이도록 함
           const pfDate =
             start[i] === end[i] ? start[i] : start[i] + ' - ' + end[i];
           dateList.push(pfDate);

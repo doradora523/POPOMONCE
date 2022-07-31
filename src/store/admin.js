@@ -38,6 +38,7 @@ export default {
   },
   actions: {
     async showProducts({ state, commit }) {
+      // 모든 판매 상품(매진 포함) 조회하기(관리자)
       state.loading = true;
       const { data } = await axios({
         url: PRODUCT_URL,
@@ -47,6 +48,7 @@ export default {
       commit('showProducts', data);
     },
     async showDetail({ state, commit }, productId) {
+      // 상품 정포 수정하기 이전 정보 불러오기 위함
       state.loading = true;
       const { data } = await axios({
         url: PRODUCT_URL + `/${productId}`,
@@ -56,6 +58,7 @@ export default {
       commit('showDetail', data);
     },
     async addProduct(context, data) {
+      // 상품 추가
       await axios({
         url: PRODUCT_URL,
         method: 'POST',
@@ -64,6 +67,7 @@ export default {
       });
     },
     async editProduct({ state, dispatch }, payload) {
+      // 상품 내용 수정
       const { productId, data } = payload;
       state.loading = true;
       await axios({
@@ -76,6 +80,7 @@ export default {
       state.loading = false;
     },
     async DeleteProduct({ dispatch }, productId) {
+      // 상품 삭제
       await axios({
         url: PRODUCT_URL + '/' + productId,
         method: 'DELETE',
@@ -84,6 +89,7 @@ export default {
       dispatch('showProducts');
     },
     async tradedProduct({ state, commit }) {
+      // 거래된 상품
       state.loading = true;
       const res = await axios({
         url: TRADED_URL + '/all',
@@ -93,6 +99,7 @@ export default {
       commit('tradedProduct', res.data);
     },
     cancelTrade(context, payload) {
+      // 상품 거래 취소
       const detailId = payload[0].id;
       const data = payload[1];
       axios({

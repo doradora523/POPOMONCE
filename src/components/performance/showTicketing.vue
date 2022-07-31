@@ -45,9 +45,9 @@
       },
       startDate() {
         const res =
-          this.$store.state.performance.detailData.startDate.split('.');
+          this.$store.state.performance.detailData.startDate.split('.'); // "2022.08.15" => ['2022', '08', '15']
         const start = res.map((d) => {
-          return Number(d);
+          return Number(d); // [2022, 8, 15] 십의 자리에도 0이 그대로 있는 string 형식을 number로 바꾸어 0을 지움
         });
         return start;
       },
@@ -69,6 +69,7 @@
       goReservate() {
         const accessToken = window.sessionStorage.getItem('token');
         if (accessToken) {
+          // 로그인이 되어있을 때만(sessionStorage에 token이 있는 경우에만) 결제 페이지로 갈 수 있게 함
           this.$router.push(`/paymentpage/${this.$route.params.detailId}`);
           console.log(this.selectedDay);
           this.$store.commit('performance/selectDate', this.selectedDay);
