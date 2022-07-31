@@ -9,6 +9,7 @@
       <div class="account-form">
         <el-select v-model="bankCode" class="account-select" required>
           <el-option value="은행명" disabled hidden>은행명</el-option>
+          <!-- 은행 코드를 key, digits 속성의 숫자를 value값으로 만든 Object로 은행마다 다른 degit들을 각 input마다 다르게 설정 -->
           <el-option
             v-for="bank in ableBankList"
             :key="bank.code"
