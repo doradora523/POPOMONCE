@@ -7,6 +7,9 @@
       @keydown.enter="submit"
     >
       <el-form-item class="add__title">
+        <div class="form-title">{{ thumbnailFileList }}</div>
+      </el-form-item>
+      <el-form-item class="add__title">
         <div class="form-title">공연 추가</div>
       </el-form-item>
       <el-form-item
@@ -33,7 +36,7 @@
       </el-form-item>
       <el-form-item
         label="상세 설명"
-        class="form__composition descript"
+        class="form__composition description"
         :rules="{
           required: true,
           message: '공연 상세설명은 필수 항목 입니다.',
@@ -73,7 +76,6 @@
           v-model="genre"
           class="add__tags"
           clearable
-          :multiple="true"
           placeholder="장르"
           size="large"
         >
@@ -116,11 +118,13 @@
       <div class="img-container">
         <el-form-item label="썸네일 이미지" class="form__composition">
           <el-upload
+            class="thumbnailFileList"
             ref="thumbnailFileList"
+            :show-file-list="true"
             :file-list="thumbnailFileList"
-            action="#"
             :auto-upload="false"
-            :on-change="handleAvatarSuccess('thumbnailFileList')"
+            :on-change="thumbnailHandleAvatarSuccess"
+            :on-remove="handleAvatarRemove"
             :limit="1"
             list-type="picture-card"
           >
@@ -149,10 +153,12 @@
         <el-form-item label="상세 이미지" class="form__composition">
           <el-upload
             ref="detailFileList"
+            class="detailFileList"
             :file-list="detailFileList"
             action="#"
             :auto-upload="false"
-            :on-change="handleAvatarSuccess('detailFileList')"
+            :on-change="detailHandleAvatarSuccess"
+            :on-remove="handleAvatarRemove"
             :limit="1"
             list-type="picture-card"
           >
@@ -241,7 +247,7 @@
         genre: '',
         openrun: '',
         thumbnailBase64: '',
-        photoBase64: '',
+        detailBase64: '',
         isSoldOut: false,
       };
     },
@@ -256,14 +262,12 @@
         );
         if (newV) {
           if (!errorMsg) return;
-          console.log('no error');
           errorMsg.style.display = 'none';
           errorBorder.style.boxShadow = '0 0 0 1px #4c4d4f inset';
           errorSuffix.style.display = 'none';
         }
         if (!newV && oldV) {
           if (!errorMsg) return;
-          console.log('error');
           errorMsg.style.display = 'block';
           errorBorder.style.boxShadow = '0 0 0 1px #f56c6c inset';
           errorSuffix.style.display = 'inline-flex';
@@ -277,14 +281,12 @@
         );
         if (newV) {
           if (!errorMsg) return;
-          console.log('no error');
           errorMsg.style.display = 'none';
           errorBorder.style.boxShadow = '0 0 0 1px #4c4d4f inset';
           errorSuffix.style.display = 'none';
         }
         if (!newV && oldV) {
           if (!errorMsg) return;
-          console.log('error');
           errorMsg.style.display = 'block';
           errorBorder.style.boxShadow = '0 0 0 1px #f56c6c inset';
           errorSuffix.style.display = 'inline-flex';
@@ -295,55 +297,39 @@
           '.description .el-form-item__error',
         );
         const errorBorder = document.querySelector(
-          '.description .el-input__wrapper',
-        );
-        const errorSuffix = document.querySelector(
-          '.description .el-input__validateIcon',
+          '.description .el-textarea__inner',
         );
         if (newV) {
           if (!errorMsg) return;
-          console.log('no error');
           errorMsg.style.display = 'none';
           errorBorder.style.boxShadow = '0 0 0 1px #4c4d4f inset';
-          errorSuffix.style.display = 'none';
         }
         if (!newV && oldV) {
           if (!errorMsg) return;
-          console.log('error');
           errorMsg.style.display = 'block';
           errorBorder.style.boxShadow = '0 0 0 1px #f56c6c inset';
-          errorSuffix.style.display = 'inline-flex';
         }
       },
     },
     methods: {
-      handleAvatarRemove(fileList) {
-        const uploader = this.$refs[fileList].$el;
-        const card = uploader.querySelector('.el-upload--picture-card');
-        card.style.display = 'inline-flex';
-        this[fileList] = [];
+      handleAvatarRemove(uploadFile) {
+        const file = uploadFile.replace('FileList', 'Base64');
+        this[file] = '';
+        const uploader = this.$refs[uploadFile].$el;
+        const inputCard = uploader.querySelector('.el-upload--picture-card');
+        inputCard.style.display = 'inline-flex';
       },
-      async handleAvatarSuccess(fileList) {
-        const uploader =
-          fileList === 'thumbnailFileList'
-            ? this.$refs.thumbnailFileList
-            : this.$refs.detailFileList;
-
-        if (!uploader) return;
-
-        console.log(uploader);
-        const dataFileList = this.$data[fileList];
-
-        console.log(dataFileList);
-        if (dataFileList < 1) return;
+      async thumbnailHandleAvatarSuccess(uploadFile) {
+        const uploader = this.$refs.thumbnailFileList.$el;
         const inputCard = uploader.querySelector('.el-upload--picture-card');
         inputCard.style.display = 'none';
-        const encodedString = await this.toBase64(
-          dataFileList && dataFileList[0].raw,
-        );
-        const encodedImg = fileList.split('FileList')[0] + 'Base64';
-        this.$data[encodedImg] = encodedString;
-        console.log(this.$data[encodedImg]);
+        this.thumbnailBase64 = await this.toBase64(uploadFile.raw);
+      },
+      async detailHandleAvatarSuccess(uploadFile) {
+        const uploader = this.$refs.detailFileList.$el;
+        const inputCard = uploader.querySelector('.el-upload--picture-card');
+        inputCard.style.display = 'none';
+        this.detailBase64 = await this.toBase64(uploadFile.raw);
       },
       async submit() {
         const tags = [this.age, this.genre, this.openrun, this.region].filter(
@@ -359,7 +345,7 @@
               description: this.description,
               tags,
               thumbnailBase64: this.thumbnailBase64 || null,
-              photoBase64: this.photoBase64 || null,
+              photoBase64: this.detailBase64 || null,
             },
           });
           alert('공연이 추가되었습니다.');
@@ -367,6 +353,15 @@
         } catch (error) {
           console.log(error);
         }
+      },
+      toBase64(file) {
+        // 프로필 사진 base64 파일로 변환하기
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
       },
     },
   };

@@ -47,11 +47,15 @@
         event.preventDefault();
         if (!this.validation) return;
 
-        await this.$store.dispatch('user/login', {
-          email: this.email,
-          password: this.password,
-        });
-        this.$router.push('/');
+        try {
+          await this.$store.dispatch('user/login', {
+            email: this.email,
+            password: this.password,
+          });
+          this.$router.push('/');
+        } catch (error) {
+          alert('아이디 또는 비번이 일치하지 않습니다.');
+        }
       },
       async logout() {
         await this.$store.dispatch('user/logout');

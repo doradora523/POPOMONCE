@@ -97,7 +97,7 @@
               :file-list="thumbnailFileList"
               action="#"
               :auto-upload="false"
-              :on-change="handleAvatarSuccess('thumbnailFileList')"
+              :on-change="thumbnailHandleAvatarSuccess"
               :limit="1"
               list-type="picture-card"
             >
@@ -114,7 +114,7 @@
                   <span class="el-upload-list__item-actions">
                     <span
                       class="el-upload-list__item-delete"
-                      @click="handleAvatarRemove('thumbnailFileList')"
+                      @click="handleAvatarRemove"
                     >
                       <el-icon><Delete /></el-icon>
                     </span>
@@ -133,7 +133,7 @@
               :file-list="detailFileList"
               action="#"
               :auto-upload="false"
-              :on-change="handleAvatarSuccess('detailFileList')"
+              :on-change="detailHandleAvatarSuccess"
               :limit="1"
               list-type="picture-card"
             >
@@ -150,7 +150,7 @@
                   <span class="el-upload-list__item-actions">
                     <span
                       class="el-upload-list__item-delete"
-                      @click="handleAvatarRemove('detailFileList')"
+                      @click="handleAvatarRemove"
                     >
                       <el-icon><Delete /></el-icon>
                     </span>
@@ -174,6 +174,7 @@
             class="product-edit__btn"
             type="primary"
             :disabled="isDone"
+            @click="submit"
           >
             {{ isDone ? '편집됨' : '편집하기' }}
           </el-button>
@@ -239,7 +240,7 @@
         genre: '',
         openrun: '',
         thumbnailBase64: '',
-        photoBase64: '',
+        detailBase64: '',
         isSoldOut: false,
         isDone: false,
         isDeleted: false,
@@ -313,54 +314,51 @@
       this.$store.dispatch('admin/showDetail', this.$route.params.adminId);
     },
     methods: {
-      handleAvatarRemove(fileList) {
-        const uploader = this.$refs[fileList].$el;
-        const card = uploader.querySelector('.el-upload--picture-card');
-        card.style.display = 'inline-flex';
-        this[fileList] = [];
+      handleAvatarRemove(uploadFile) {
+        const file = uploadFile.replace('FileList', 'Base64');
+        this[file] = '';
+        const uploader = this.$refs[uploadFile].$el;
+        const inputCard = uploader.querySelector('.el-upload--picture-card');
+        inputCard.style.display = 'inline-flex';
       },
-      async handleAvatarSuccess(fileList) {
-        // 파일이 성공적으로 업로드 되었을 때, css 조절 + base 64 변환
-        const uploader =
-          fileList === 'thumbnailFileList'
-            ? this.$refs.thumbnailFileList
-            : this.$refs.detailFileList;
-
-        if (!uploader) return;
-
-        console.log(uploader);
-        const dataFileList = this.$data[fileList];
-
-        console.log(dataFileList);
-        if (dataFileList < 1) return;
+      async thumbnailHandleAvatarSuccess(uploadFile) {
+        const uploader = this.$refs.thumbnailFileList.$el;
         const inputCard = uploader.querySelector('.el-upload--picture-card');
         inputCard.style.display = 'none';
-        const encodedString = await this.toBase64(
-          dataFileList && dataFileList[0].raw,
-        );
-        const encodedImg = fileList.split('FileList')[0] + 'Base64';
-        this.$data[encodedImg] = encodedString;
-        console.log(this.$data[encodedImg]);
+        this.thumbnailBase64 = await this.toBase64(uploadFile.raw);
+      },
+      async detailHandleAvatarSuccess(uploadFile) {
+        const uploader = this.$refs.detailFileList.$el;
+        const inputCard = uploader.querySelector('.el-upload--picture-card');
+        inputCard.style.display = 'none';
+        this.detailBase64 = await this.toBase64(uploadFile.raw);
       },
       async submit() {
-        await this.$store.dispatch('admin/editProduct', {
-          productId: this.$route.params.id,
-          data: {
-            title: this.title || null,
-            price: this.price || null,
-            description: this.description || null,
-            tags: [
-              this.age || this.oldDetail.tags[0],
-              this.genre || this.oldDetail.tags[1],
-              this.openrun || this.oldDetail.tags[2],
-              this.region || this.oldDetail.tags[3],
-            ],
-            thumbnailBase64: this.thumbnailBase64 || null,
-            photoBase64: this.photoBase64 || null,
-            isSoldOut: this.isSoldOut,
-          },
-        });
-        this.isDone = true;
+        try {
+          console.log('submit edit');
+          await this.$store.dispatch('admin/editProduct', {
+            productId: this.$route.params.adminId,
+            data: {
+              title: this.title || null,
+              price: this.price || null,
+              description: this.description || null,
+              tags: [
+                this.age || this.oldDetail.tags[0],
+                this.genre || this.oldDetail.tags[1],
+                this.openrun || this.oldDetail.tags[2],
+                this.region || this.oldDetail.tags[3],
+              ],
+              thumbnailBase64: this.thumbnailBase64 || null,
+              photoBase64: this.detailBase64 || null,
+              isSoldOut: this.isSoldOut,
+            },
+          });
+          this.isDone = true;
+          this.$router.push('/admin/allsales');
+        } catch (error) {
+          console.log(error);
+          alert('공연 편집이 되지 않았습니다.');
+        }
       },
       async deletePf() {
         const res = confirm(
@@ -369,9 +367,11 @@
         if (!res) return;
         await this.$store.dispatch(
           'admin/DeleteProduct',
-          this.$route.params.id,
+          this.$route.params.adminId,
         );
         this.isDeleted = true;
+        alert('삭제되었습니다.');
+        this.$router.push('/admin/allsales');
       },
     },
   };
