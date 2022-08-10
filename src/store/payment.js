@@ -37,6 +37,13 @@ export default {
       state.paidInfo = payload;
       state.loading = false;
     },
+    paymentDetail(state, payload) {
+      state.paidInfo.map((paid) => {
+        if (paid.detailId === payload.detailId) {
+          return (paid.account = payload.account);
+        }
+      });
+    },
     connectAccount(state, payload) {
       const newAccounts = [...state.accountList.accounts, payload];
 
@@ -124,7 +131,6 @@ export default {
           },
           data,
         });
-        console.log('paid!');
       } catch (error) {
         console.log(error);
       }
@@ -142,7 +148,6 @@ export default {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log(data);
         commit('paymentAll', data);
       } catch (error) {
         console.log(error);
@@ -152,18 +157,8 @@ export default {
       // 구매한 물품 상세정보 조회
       try {
         state.loading = true;
-        const accessToken = window.sessionStorage.getItem('token');
-        const { data } = await axios({
-          url: TRADEDDETAIL_URL,
-          method: 'POST',
-          headers: {
-            ...headers,
-            Authorization: `Bearer ${accessToken}`,
-          },
-          data,
-        });
-        console.log(data);
-        commit('paymentAll', data);
+
+        commit('paymentDetail', res.data);
       } catch (error) {
         console.log(error);
       }

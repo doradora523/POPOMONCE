@@ -26,6 +26,7 @@
       <el-form-item
         label="가격"
         class="form__composition price"
+        type="number"
         :rules="{
           required: true,
           message: '공연 가격은 필수 항목 입니다.',

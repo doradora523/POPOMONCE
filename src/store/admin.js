@@ -98,16 +98,17 @@ export default {
       });
       commit('tradedProduct', res.data);
     },
-    cancelTrade(context, payload) {
+    async cancelTrade({ dispatch }, payload) {
       // 상품 거래 취소
       const detailId = payload[0].id;
       const data = payload[1];
-      axios({
+      await axios({
         url: TRADED_URL + `/${detailId}`,
         method: 'PUT',
         headers,
         data,
       });
+      dispatch('tradedProduct');
     },
   },
 };

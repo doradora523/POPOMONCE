@@ -99,7 +99,7 @@
       return {
         oldPassword: '',
         newPassword: '',
-        displayName: '',
+        displayName: this.$store.state.user.displayName,
         isProfileChanged: false,
         profileBase64: this.$store.state.user.profileImg,
         imgUrl: '',
