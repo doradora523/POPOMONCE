@@ -156,6 +156,5 @@ gif / image
 ### Crew
 
 - [💎 조수경](https://github.com/doradora523)
-- [🍷 정한결](https://github.com/gyeol2678)
 - [🍑 김휘린(Leader)](https://github.com/whilini)
 - [✨ 김명진](https://github.com/k-m-jin)
