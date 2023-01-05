@@ -1,10 +1,10 @@
 # 🎟 (Service Name)
 
-공연, 전시 검색 및 예약 서비스
+###공연, 전시 검색 및 예약 서비스
 
 ## 🎷 Website
 
-gif / image
+https://poppomonce.netlify.app/
 
 ## 🎩 Description
 
